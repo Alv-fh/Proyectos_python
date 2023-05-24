@@ -9,7 +9,7 @@ import random
 import time
 import math
 import turtle
-
+from sys import exit
 
 #para los colores puedes poner colorama o rich, los 2 son muy utiles
 
@@ -315,12 +315,13 @@ def Juegos():
     print ("          [1] Ruleta Rusa               ")
     print ("          [2] Adivinador de Contraseña  ")
     print ("          [3] Corazón                   ")
-    print ("          [4] Exit                      ")
+    print ("          [4] Ahorcado                  ")
+    print ("          [5] Exit")
     print ()
     print ("________________________________________")
 
     juego = input ("Juego->> ")
-    if juego == "4":
+    if juego == "5":
         Menu()
 
     if juego == "1":
@@ -363,8 +364,76 @@ def Juegos():
             t.goto((xt(i)*20, yt(i)*20))
             t.pencolor('red')
             t.goto(0,0)
+    elif juego == "4":
+         
 
-    Juegos()
+        palabras = ["alvaro", "khalid", "jose", "pedro", "ruben", "felix", "dani", "herrero", "guti", "david", "alejandro", "jaime", "nicolas", "miguel", "diego","zakaria","pablo"]
+        equipos = ["betis", "barcelona", "sevilla", "madrid", "valencia", "celta", "villareal", "girona", "athletic", "osasuna", "sociedad", "mallorca", "almeria", "cadiz", "valladolid", "elche", "espanyol"]
+        colores = ["verde","amarillo", "rojo", "naranja", "negro", "blanco", "marron", "azul", "rosa"]
+
+        print("palabras,  equipos, colores")
+        opcion = input("¿Qué lista quieres escoger?->> ")
+        if opcion == "palabras":
+            eleccion = random.choice(palabras)
+        elif opcion == "equipos":
+            eleccion = random.choice(equipos)
+        elif opcion == "colores":
+            eleccion = random.choice(colores)
+
+        letras = list(eleccion)
+        lediste = [False] * len(eleccion)
+
+        contador = len(eleccion)
+        palabra = ""
+        print("La palabra tiene", contador, "caracteres")
+        def preg(s, listp):
+            sino = input("¿Quieres decir la palabra?->> ")
+            if sino == "si" or sino == "s":
+                palabra = input("Palabra->> ")
+                if palabra == eleccion:
+                    print("Correcto!!!" + "")
+                    exit()
+                else:
+                    print("Incorrecto")
+                    preg(s, listp)
+            elif sino == "no" or sino == "n":
+                letras2(s, listp)
+            else:
+                preg(s, listp)
+        def letras2(s, listp):
+
+            letra1 = input("Letra->> ")
+            if letra1 in listp:
+                letras2(s, listp)
+            listp.append(letra1)
+            sacarletra = eleccion.count(letra1)
+            if letra1 != "":
+                for i in range(len(eleccion)):
+                    if letra1 == letras[i]:
+                        lediste[i] = True
+            for i in range(len(eleccion)):
+                if lediste[i] == True:
+                    print(f" {str(letras[i])} ", end='')
+                else:
+                    print(f" _ ", end=''),
+            print()
+            
+            print("\nTiene", sacarletra, "de su letra", letra1)
+            s = s+1
+            print(f"Contador->> { s }/10")
+            if s != 10:
+                #repetir()
+                preg(s, listp)
+            else:
+                print("\U0001f480" + "\U0001f480" + "\U0001f480" + "\U0001f480" + "\U0001f480" + "\U0001f480" + "\U0001f480" + "\U0001f480" + "\U0001f480" + "\U0001f480" + "\U0001f480")
+                print("\U0001f480" + "Has sido ahorcado " + "\U0001f480")
+                print("\U0001f480" + "\U0001f480" + "\U0001f480" + "\U0001f480" + "\U0001f480" + "\U0001f480" + "\U0001f480" + "\U0001f480" + "\U0001f480" + "\U0001f480" + "\U0001f480")
+                print()
+                exit()
+
+        letras2(0, [""])
+
+        Juegos()
 
 #menu principal
 
